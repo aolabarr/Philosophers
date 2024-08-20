@@ -6,18 +6,18 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:11:30 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/07/28 15:34:58 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:16:30 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	check_input(int ac, char **av, t_data *data)
+char	*check_input(int ac, char **av, t_data *data)
 {
 	int	i;
 
-	if (ac < 4 || ac > 5)
-		handle_error(NULL, INPUT);
+	if (ac < 5 || ac > 6)
+		return (handle_error(NULL, INPUT), NULL);
 	i = 1;
 	while (i < ac)
 	{
@@ -25,24 +25,28 @@ void	check_input(int ac, char **av, t_data *data)
 			handle_error(NULL, INPUT);
 		i++;
 	}
-	data->time_die = ftph_atoi(av[1]);
-	data->time_eat = ftph_atoi(av[2]);
-	data->time_sleep = ftph_atoi(av[3]);
-	if (ac == 5)
-		data->n = ftph_atoi(av[4]);
+	data->nbr_philos = ftph_atoi(av[1]);
+	data->time_die = ftph_atoi(av[2]);
+	data->time_eat = ftph_atoi(av[3]);
+	data->time_sleep = ftph_atoi(av[4]);
+	if (ac == 6)
+		data->nbr_meals = ftph_atoi(av[5]);
 	else
-		data->n = 0;
-	return ;
+		data->nbr_meals = NO_MEALS;
+	return ("1");
 }
 
 void	handle_error(t_data *data, int type)
 {
 	if (type == INPUT)
-		perror(INPUT_ERROR_MESSAGE);
+		ftph_putendl(INPUT_ERROR_MESSAGE);
 	else if (type == MALLOC)
-		perror(MALLOC_ERROR_MESSAGE);
+		ftph_putendl(MALLOC_ERROR_MESSAGE);
+	else if (type == MUTEX)
+		ftph_putendl(MUTEX_ERROR_MESSAGE);
+	else if (type == THREAD)
+		ftph_putendl(THREAD_ERROR_MESSAGE);
 	free_all(data);
-	exit(EXIT_FAILURE);
 	return ;
 }
 

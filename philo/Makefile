@@ -6,7 +6,7 @@
 #    By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/28 14:37:22 by aolabarr          #+#    #+#              #
-#    Updated: 2024/07/28 15:15:10 by aolabarr         ###   ########.fr        #
+#    Updated: 2024/08/20 17:09:29 by aolabarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,10 @@ SRC_DIR = ./src
 INC_DIR = .
 
 
-SRC =	philo_main.c\
-		philo_utils.c\
-		philo_error.c\
+SRC =	philo_main.c \
+		philo_utils.c \
+		philo_error.c \
+		philo_init.c \
 
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
