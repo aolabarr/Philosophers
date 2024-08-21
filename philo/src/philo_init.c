@@ -6,83 +6,84 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:48:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/20 21:01:04 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/21 11:51:47 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	init_philos(t_data *data)
+char	*init_data(int ac, char **av, t_data *data)
+{
+	data->nbr_philos = ftph_atoi(av[1]);
+	data->time_die = ftph_atoi(av[2]);
+	data->time_eat = ftph_atoi(av[3]);
+	data->time_sleep = ftph_atoi(av[4]);
+	if (ac == 6)
+		data->nbr_meals = ftph_atoi(av[5]);
+	else
+		data->nbr_meals = NO_MEALS;
+	if (!init_forks(data))
+		return (NULL);
+	if (!init_philos(data))
+		return (NULL);
+	data->die = 0;
+	data->full = 0;
+	return (NO_NULL);
+}
+
+char	*init_philos(t_data *data)
 {
 	int i;
 	int num;
 
 	data->philos = ft_malloc(data, sizeof(t_philo) * data->nbr_philos);
+	if (!data->philos)
+		return (NULL);
 	i = 0;
 	while (i < data->nbr_philos)
 	{
 		data->philos[i].id = i;
 		num = (i + 1) % data->nbr_philos;
+		data->philos[i].f_fork = &data->forks[num];
+		data->philos[i].s_fork = &data->forks[i];
 		if (i % 2 == 0)
 		{
 			data->philos[i].f_fork = &data->forks[i];
 			data->philos[i].s_fork = &data->forks[num];
 		}
-		else
-		{
-			data->philos[i].f_fork = &data->forks[num];
-			data->philos[i].s_fork = &data->forks[i];
-		}
+		data->philos[i].meals = 0;
 		data->philos[i].full = 0;
-		data->philos[i].last_time = 0;
+		data->philos[i].last_time = ft_gettimeofday();
 		data->philos[i].data = (void *)data;
 		i++;
 	}
-	return ;
+	return (NO_NULL);
 }
 
-void	init_forks(t_data *data)
+char	*init_forks(t_data *data)
 {
 	int i;
 
 	data->forks = malloc(sizeof(t_fork) * data->nbr_philos);
 	if (!data->forks)
-		handle_error(data, MALLOC);
+		return (handle_error(data, MALLOC), NULL);
 	i = 0;
 	while (i < data->nbr_philos)
 	{
 		data->forks[i].id = i;
 		if (pthread_mutex_init(&data->forks[i].mutex, NULL) != 0)
-			handle_error(data, MUTEX);
+			return (handle_error(data, MUTEX), NULL);
 		i++;
 	}
-	return ;
+	return (NO_NULL);
 }
 
-void	dinner_start(t_data *data)
+size_t	ft_gettimeofday(void)
 {
-	int	i;
+	struct timeval	tv;
+	size_t			mstime;
 
-	i = 0;
-	while(i < data->nbr_philos)
-	{
-		write(1, "Prueba AA\n", 10);
-		if (pthread_create(data->philos[i].thread, NULL, run_philo, (void *)&data->philos[i]) != 0)
-			handle_error(data, THREAD);
-		write(1, "Prueba BB\n", 10);
-		if (pthread_join(*data->philos[i].thread, NULL) != 0)
-			handle_error(data, JOIN);
-		i++;
-	}
-	return ;
-}
-void	*run_philo(void *input)
-{
-	t_philo philo;
-
-	printf("Prueba AAA\n");
-	philo = *(t_philo *)input;
-	printf("Thread: %d\n", philo.id);
-	usleep(100);
-	return (NULL);
+	gettimeofday(&tv, NULL);
+	mstime = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (mstime);
 }

@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:32:48 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/20 21:14:23 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/21 11:57:44 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,14 @@
 int	main(int ac, char **av)
 {
 	t_data	data;
-	printf("Prueba A\n");
-	if (!check_input(ac, av, &data))
-		return (1);
-	printf("Prueba B\n");
-	init_forks(&data);
-	printf("Prueba C\n");
-	init_philos(&data);
-	printf("Prueba D\n");
+	
+	if (!check_input(ac, av))
+		return (EXIT_FAILURE);
+	if (!init_data(ac, av, &data))
+		return (EXIT_FAILURE);
 	dinner_start(&data);
-	printf("Prueba E\n");
+	free_all(&data);
+	printf("Prueba FIN\n");
 	return (0);
 }
 
@@ -36,5 +34,7 @@ void	free_all(t_data *data)
 		free(data->philos);
 	if (data->forks)
 		free(data->forks);
+	data->philos = NULL;
+	data->forks = NULL;
 	return ;
 }

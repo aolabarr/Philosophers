@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:04:17 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/20 21:08:39 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/21 09:02:43 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	*ft_malloc(t_data *data, int bytes)
 {
 	void	*ptr;
 
-	ptr = NULL;
 	ptr = malloc(bytes);
 	if (!ptr) 
 		handle_error(data, MALLOC);

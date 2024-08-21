@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:34:43 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/20 21:14:11 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:34:07 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,26 @@ typedef struct s_forks
 typedef struct s_philo
 {
 	int			id;
-	pthread_t	*thread;
+	pthread_t	thread;
 	t_fork		*f_fork;
 	t_fork		*s_fork;
+	int			meals;
 	int			full;
-	int			last_time;
+	size_t		last_time;
 	void		*data;
 } 				t_philo;
 
 typedef struct s_data
 {
 	int		nbr_philos;
-	int		time_die;
+	size_t	time_die;
 	int		time_eat;
 	int		time_sleep;
 	int		nbr_meals;
 	t_philo	*philos;
 	t_fork	*forks;
+	int		die;
+	int		full;
 }			t_data;
 
 # define INPUT_ERROR_MESSAGE		"Incorrect arguments"
@@ -55,6 +58,7 @@ typedef struct s_data
 # define THREAD_ERROR_MESSAGE		"Thread creation error"
 
 # define NO_MEALS	-1
+# define NO_NULL	""
 # define INPUT		1
 # define MALLOC		2
 # define MUTEX		3
@@ -65,7 +69,7 @@ typedef struct s_data
 void	free_all(t_data *data);
 
 // ERRORS
-char	*check_input(int ac, char **av, t_data *data);
+char	*check_input(int ac, char **av);
 void	handle_error(t_data *data, int type);
 int		str_is_digit(char *str);
 
@@ -76,9 +80,15 @@ int		ftph_atoi(const char *str);
 void	*ft_malloc(t_data *data, int bytes);
 
 //INIT
-void	init_philos(t_data *data);
-void	init_forks(t_data *data);
-void	dinner_start(t_data *data);
+char	*init_data(int ac, char **av, t_data *data);
+char	*init_philos(t_data *data);
+char	*init_forks(t_data *data);
+size_t	ft_gettimeofday(void);
+
+//START
+char	*dinner_start(t_data *data);
 void	*run_philo(void *);
+void	*run_monitor(void *);
+void	eat(t_philo *philo, t_fork *forks);
 
 #endif
