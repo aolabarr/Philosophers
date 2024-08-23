@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:32:48 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/22 18:37:08 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/23 13:08:51 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,3 @@ void	free_all(t_data *data)
 	return ;
 }
 
-void	final_info(t_data *data)
-{
-	int i = -1;
-
-	printf("\nINFO\n");
-	while(++i < data->nbr_philos)
-		printf("philo %d meals: %d\n", data->philos[i].id, data->philos[i].meals);
-	printf("full, die: (%d, %d)\n", data->full, data->die);
-
-}

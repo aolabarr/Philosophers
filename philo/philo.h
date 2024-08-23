@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:34:43 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/22 18:33:52 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:09:37 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_philo
 	t_fork		*s_fork;
 	int			meals;
 	int			full;
+	int			die;
 	size_t		last_time;
 	void		*data;
 } 				t_philo;
@@ -59,9 +60,10 @@ typedef struct s_data
 # define MUTEX_ERROR_MESSAGE		"Mutex creation error"
 # define THREAD_ERROR_MESSAGE		"Thread creation error"
 
-# define NO_MEALS	-1
-# define NO_NULL	""
-# define SLEEP_MONITOR 100
+# define NO_MEALS		-1
+# define NO_NULL		""
+# define SLEEP_EVEN		10
+# define DEAD			1
 
 # define INPUT		1
 # define MALLOC		2
@@ -69,9 +71,12 @@ typedef struct s_data
 # define THREAD		4
 # define JOIN		5
 
+void	final_info(t_data *data);
+void	philo_info(t_philo *philo);
+
 //MAIN
 void	free_all(t_data *data);
-void	final_info(t_data *data);
+
 
 // ERRORS
 char	*check_input(int ac, char **av);
@@ -87,6 +92,7 @@ void	*ft_malloc(t_data *data, int bytes);
 //INIT
 char	*init_data(int ac, char **av, t_data *data);
 char	*init_philos(t_data *data);
+void	assign_forks(t_data *data, int i);
 char	*init_forks(t_data *data);
 size_t	ft_gettimeofday(void);
 
@@ -94,6 +100,8 @@ size_t	ft_gettimeofday(void);
 char	*dinner_start(t_data *data);
 void	*run_philo(void *);
 void	*run_monitor(void *);
+int		check_status(t_data *data);
+int		is_dead(t_data *data, int i);
 void	eat(t_philo *philo);
 
 #endif

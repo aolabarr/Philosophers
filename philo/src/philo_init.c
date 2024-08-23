@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:48:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/22 15:33:46 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/23 16:46:20 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	*init_data(int ac, char **av, t_data *data)
 	if (!init_philos(data))
 		return (NULL);
 	data->die = 0;
-	printf("data->die: %d\n", data->die);
 	data->full = 0;
 	return (NO_NULL);
 }
@@ -35,7 +34,6 @@ char	*init_data(int ac, char **av, t_data *data)
 char	*init_philos(t_data *data)
 {
 	int i;
-	int num;
 
 	data->philos = ft_malloc(data, sizeof(t_philo) * data->nbr_philos);
 	if (!data->philos)
@@ -44,21 +42,31 @@ char	*init_philos(t_data *data)
 	while (i < data->nbr_philos)
 	{
 		data->philos[i].id = i;
-		num = (i + 1) % data->nbr_philos;
-		data->philos[i].f_fork = &data->forks[num];
-		data->philos[i].s_fork = &data->forks[i];
-		if (i % 2 == 0)
-		{
-			data->philos[i].f_fork = &data->forks[i];
-			data->philos[i].s_fork = &data->forks[num];
-		}
+		assign_forks(data, i);
 		data->philos[i].meals = 0;
 		data->philos[i].full = 0;
-		data->philos[i].last_time = SIZE_MAX;
+		data->philos[i].die = 0;
+		data->philos[i].last_time = ft_gettimeofday();
 		data->philos[i].data = (void *)data;
 		i++;
 	}
 	return (NO_NULL);
+}
+void	assign_forks(t_data *data, int i)
+{
+	int num;
+
+	num = (i + 1) % data->nbr_philos;
+	data->philos[i].f_fork = &data->forks[num];
+	data->philos[i].s_fork = &data->forks[i];
+	/*
+	if (i % 2 != 0)
+	{
+		data->philos[i].f_fork = &data->forks[i];
+		data->philos[i].s_fork = &data->forks[num];
+	}
+	*/
+	return ;
 }
 
 char	*init_forks(t_data *data)
