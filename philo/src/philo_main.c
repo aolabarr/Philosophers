@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:32:48 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/23 13:08:51 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:47:32 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 	if (!init_data(ac, av, &data))
 		return (EXIT_FAILURE);
 	dinner_start(&data);
-	final_info(&data);
+	//final_info(&data);
 	free_all(&data);
 	printf("Prueba FIN\n");
 	return (0);

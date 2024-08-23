@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:48:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/23 16:46:20 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:11:08 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*init_philos(t_data *data)
 	i = 0;
 	while (i < data->nbr_philos)
 	{
-		data->philos[i].id = i;
+		data->philos[i].id = i + 1;
 		assign_forks(data, i);
 		data->philos[i].meals = 0;
 		data->philos[i].full = 0;

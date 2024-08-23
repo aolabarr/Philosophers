@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:34:43 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/23 16:09:37 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/23 18:09:49 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_philo
 	int			meals;
 	int			full;
 	int			die;
+	t_mtx		die_mutex;
 	size_t		last_time;
 	void		*data;
 } 				t_philo;
@@ -50,6 +51,7 @@ typedef struct s_data
 	int			nbr_meals;
 	t_philo		*philos;
 	t_fork		*forks;
+	t_mtx		die_mutex;
 	pthread_t	monitor;
 	int			die;
 	int			full;

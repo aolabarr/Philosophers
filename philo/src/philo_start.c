@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:07:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/23 16:21:57 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:44:52 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,17 @@ void	*run_philo(void *input)
 
 	philo = (t_philo *)input;
 	data = (t_data *)philo->data;
-	//printf("Thread INIT: %d, full, die: (%d, %d)\n", philo->id, data->full, data->die);
 	if (philo->id % 2 == 0)
 		usleep(SLEEP_EVEN * 1000);
 	while (philo->full == 0 && data->die == 0)
 	{
 		eat(philo);
-		if (philo->die == 1)
-			break ;
-		printf("%ld %d is sleeping\n", ft_gettimeofday(), philo->id);
+		if (data->die == 0)
+			printf("%ld %d is sleeping\n", ft_gettimeofday(), philo->id);
 		usleep(data->time_sleep * 1000);
-		printf("%ld %d is thinking\n", ft_gettimeofday(), philo->id);
-		philo_info(philo);
+		if (data->die == 0)
+			printf("%ld %d is thinking\n", ft_gettimeofday(), philo->id);
+		//philo_info(philo);
 	}
 	if (philo->die == 1)
 		printf("%ld %d is dead\n", ft_gettimeofday(), philo->id);
@@ -63,16 +62,19 @@ void	*run_philo(void *input)
 
 void	eat(t_philo *philo)
 {
-	int	time;
+	t_data	*data;
 
-	time = ((t_data *)philo->data)->time_eat;
+	data = ((t_data *)philo->data);
 	pthread_mutex_lock(&philo->f_fork->mutex);
-	printf("%ld %d has taken a fork\n", ft_gettimeofday(), philo->id);
+	if (data->die == 0)
+		printf("%ld %d has taken a fork\n", ft_gettimeofday(), philo->id);
 	pthread_mutex_lock(&philo->s_fork->mutex);
-	printf("%ld %d has taken a fork\n", ft_gettimeofday(), philo->id);
+	if (data->die == 0)
+		printf("%ld %d has taken a fork\n", ft_gettimeofday(), philo->id);
 	philo->last_time = ft_gettimeofday();
-	printf("%ld %d is eating\n", philo->last_time, philo->id);
-	usleep(time * 1000);
+	if (data->die == 0)
+		printf("%ld %d is eating\n", philo->last_time, philo->id);
+	usleep(data->time_eat * 1000);
 	philo->meals += 1;
 	pthread_mutex_unlock(&philo->s_fork->mutex);
 	pthread_mutex_unlock(&philo->f_fork->mutex);

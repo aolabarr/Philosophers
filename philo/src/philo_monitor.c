@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:27:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/23 16:47:51 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:46:03 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	is_dead(t_data *data, int i)
 	{
 		data->die = 1;
 		data->philos[i].die = 1;
-		printf("DIE: %zu, %zu\n", time_interval, data->time_die);
+		//printf("DIE: %zu, %zu\n", time_interval, data->time_die);
 		return (1);
 	}
 	return (0);
