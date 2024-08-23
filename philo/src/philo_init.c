@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:48:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/21 11:51:47 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:33:46 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	*init_data(int ac, char **av, t_data *data)
 	if (!init_philos(data))
 		return (NULL);
 	data->die = 0;
+	printf("data->die: %d\n", data->die);
 	data->full = 0;
 	return (NO_NULL);
 }
@@ -53,7 +54,7 @@ char	*init_philos(t_data *data)
 		}
 		data->philos[i].meals = 0;
 		data->philos[i].full = 0;
-		data->philos[i].last_time = ft_gettimeofday();
+		data->philos[i].last_time = SIZE_MAX;
 		data->philos[i].data = (void *)data;
 		i++;
 	}

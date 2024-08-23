@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:34:43 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/21 12:34:07 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:33:52 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <stdint.h>
 
 typedef pthread_mutex_t t_mtx;
 
@@ -41,15 +42,16 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int		nbr_philos;
-	size_t	time_die;
-	int		time_eat;
-	int		time_sleep;
-	int		nbr_meals;
-	t_philo	*philos;
-	t_fork	*forks;
-	int		die;
-	int		full;
+	int			nbr_philos;
+	size_t		time_die;
+	int			time_eat;
+	int			time_sleep;
+	int			nbr_meals;
+	t_philo		*philos;
+	t_fork		*forks;
+	pthread_t	monitor;
+	int			die;
+	int			full;
 }			t_data;
 
 # define INPUT_ERROR_MESSAGE		"Incorrect arguments"
@@ -59,6 +61,8 @@ typedef struct s_data
 
 # define NO_MEALS	-1
 # define NO_NULL	""
+# define SLEEP_MONITOR 100
+
 # define INPUT		1
 # define MALLOC		2
 # define MUTEX		3
@@ -67,6 +71,7 @@ typedef struct s_data
 
 //MAIN
 void	free_all(t_data *data);
+void	final_info(t_data *data);
 
 // ERRORS
 char	*check_input(int ac, char **av);
@@ -89,6 +94,6 @@ size_t	ft_gettimeofday(void);
 char	*dinner_start(t_data *data);
 void	*run_philo(void *);
 void	*run_monitor(void *);
-void	eat(t_philo *philo, t_fork *forks);
+void	eat(t_philo *philo);
 
 #endif
