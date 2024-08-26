@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:27:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/26 18:12:06 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/26 19:12:03 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	is_dead_calcule(t_data *data, int i)
 	if (data->philos[i].meals > 0 && data->philos[i].full == 0
 		&& time_interval > data->time_die)
 	{
+		printf("%ld %d is dead\n", ft_gettimeofday(), data->philos[i].id);
 		pthread_mutex_lock(&data->die_mutex);
 		printf("%ld %d is dead\n", ft_gettimeofday(), data->philos[i].id);
 		data->die = 1;

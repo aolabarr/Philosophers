@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:34:43 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/26 18:19:12 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/26 18:50:40 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void	philo_info(t_philo *philo);
 
 //MAIN
 void	free_all(t_data *data);
+char	*one_philosopher(t_data *data);
+void	*run_one_philo(void *input);
 
 // ERRORS
 char	*check_input(int ac, char **av);

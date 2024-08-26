@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:07:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/26 18:09:37 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/26 18:46:43 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,3 +90,4 @@ int	is_someone_dead(t_data *data)
 	pthread_mutex_unlock(&data->die_mutex);
 	return (0);
 }
+
