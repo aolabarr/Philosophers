@@ -6,14 +6,14 @@
 #    By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/28 14:37:22 by aolabarr          #+#    #+#              #
-#    Updated: 2024/08/23 13:13:37 by aolabarr         ###   ########.fr        #
+#    Updated: 2024/08/26 15:38:06 by aolabarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 NO_LINK = -c
 CFLAGS = -Wall -Wextra -Werror -g3
-SFLAGS =  -fsanitize=address
+SFLAGS =  -fsanitize=thread
 
 OBJ_DIR = ./obj
 SRC_DIR = ./src
@@ -27,6 +27,7 @@ SRC =	philo_main.c \
 		philo_init.c \
 		philo_start.c \
 		philo_monitor.c \
+		philo_actions.c \
 		info.c
 
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))

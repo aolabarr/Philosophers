@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:07:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/23 17:44:52 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/26 18:09:37 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,66 +17,76 @@ char	*dinner_start(t_data *data)
 	int	i;
 
 	if (pthread_create(&data->monitor, NULL, run_monitor, (void *)data) != 0)
-			return (handle_error(data, THREAD), NULL);
+		return (handle_error(data, THREAD), NULL);
 	i = 0;
-	while(i < data->nbr_philos)
+	while (i < data->nbr_philos)
 	{
-		if (pthread_create(&data->philos[i].thread, NULL, run_philo, (void *)&data->philos[i]) != 0)
+		if (pthread_create(&data->philos[i].thread, NULL, run_philo,
+				(void *)&data->philos[i]) != 0)
 			return (handle_error(data, THREAD), NULL);
 		i++;
 	}
 	i = 0;
-	while(i < data->nbr_philos)
+	while (i < data->nbr_philos)
 	{
 		if (pthread_join(data->philos[i].thread, NULL) != 0)
 			return (handle_error(data, JOIN), NULL);
 		i++;
 	}
 	if (pthread_join(data->monitor, NULL) != 0)
-			return (handle_error(data, JOIN), NULL);
+		return (handle_error(data, JOIN), NULL);
 	return (NO_NULL);
 }
+
 void	*run_philo(void *input)
 {
-	t_philo *philo;
+	t_philo	*philo;
 	t_data	*data;
 
 	philo = (t_philo *)input;
 	data = (t_data *)philo->data;
 	if (philo->id % 2 == 0)
 		usleep(SLEEP_EVEN * 1000);
+	pthread_mutex_lock(&data->die_mutex);
 	while (philo->full == 0 && data->die == 0)
 	{
-		eat(philo);
-		if (data->die == 0)
-			printf("%ld %d is sleeping\n", ft_gettimeofday(), philo->id);
-		usleep(data->time_sleep * 1000);
-		if (data->die == 0)
-			printf("%ld %d is thinking\n", ft_gettimeofday(), philo->id);
-		//philo_info(philo);
+		pthread_mutex_unlock(&data->die_mutex);
+		do_action(data, philo, GET_F_FORK);
+		do_action(data, philo, GET_S_FORK);
+		do_action(data, philo, EAT);
+		do_action(data, philo, SLEEP);
+		do_action(data, philo, THINK);
+		pthread_mutex_lock(&data->die_mutex);
 	}
-	if (philo->die == 1)
-		printf("%ld %d is dead\n", ft_gettimeofday(), philo->id);
+	pthread_mutex_unlock(&data->die_mutex);
 	return (NO_NULL);
 }
 
-void	eat(t_philo *philo)
+int	do_action(t_data *data, t_philo *philo, int type)
 {
-	t_data	*data;
+	if (is_someone_dead(data))
+		return (0);
+	if (type == GET_F_FORK)
+		get_fork(philo, FIRST);
+	else if (type == GET_S_FORK)
+		get_fork(philo, SECOND);
+	if (type == EAT)
+		eat(data, philo);
+	else if (type == SLEEP)
+		sleep_action(data, philo);
+	else if (type == THINK)
+		printf("%ld %d is thinking\n", ft_gettimeofday(), philo->id);
+	return (0);
+}
 
-	data = ((t_data *)philo->data);
-	pthread_mutex_lock(&philo->f_fork->mutex);
-	if (data->die == 0)
-		printf("%ld %d has taken a fork\n", ft_gettimeofday(), philo->id);
-	pthread_mutex_lock(&philo->s_fork->mutex);
-	if (data->die == 0)
-		printf("%ld %d has taken a fork\n", ft_gettimeofday(), philo->id);
-	philo->last_time = ft_gettimeofday();
-	if (data->die == 0)
-		printf("%ld %d is eating\n", philo->last_time, philo->id);
-	usleep(data->time_eat * 1000);
-	philo->meals += 1;
-	pthread_mutex_unlock(&philo->s_fork->mutex);
-	pthread_mutex_unlock(&philo->f_fork->mutex);
-	return ;
+int	is_someone_dead(t_data *data)
+{
+	pthread_mutex_lock(&data->die_mutex);
+	if (data->die == 1)
+	{
+		pthread_mutex_unlock(&data->die_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&data->die_mutex);
+	return (0);
 }

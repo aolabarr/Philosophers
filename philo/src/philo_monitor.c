@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:27:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/23 17:46:03 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/26 18:12:06 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*run_monitor(void *input)
 {
-    t_data	*data;
+	t_data	*data;
 
 	data = (t_data *)input;
 	while (data->full == 0)
@@ -29,34 +29,37 @@ int	check_status(t_data *data)
 {
 	int		i;
 	int		all_full;
-	
+
 	i = 0;
 	all_full = 0;
 	while (i < data->nbr_philos)
 	{
-		if (data->philos[i].meals == data->nbr_meals)
-			data->philos[i].full = 1;
+		pthread_mutex_lock(&data->full_mutex);
 		all_full += data->philos[i].full;
+		pthread_mutex_unlock(&data->full_mutex);
 		if (all_full == data->nbr_philos)
 			data->full = 1;
-		if (is_dead(data, i))
-			return (1);
+		if (is_dead_calcule(data, i))
+			return (DEAD);
 		i++;
 	}
-	//final_info(data);
 	return (0);
 }
 
-int	is_dead(t_data *data, int i)
+int	is_dead_calcule(t_data *data, int i)
 {
 	size_t	time_interval;
 
+	pthread_mutex_lock(&data->time_mutex);
 	time_interval = ft_gettimeofday() - data->philos[i].last_time;
-	if (data->philos[i].meals > 0 && data->philos[i].full == 0 && time_interval > data->time_die)
+	pthread_mutex_unlock(&data->time_mutex);
+	if (data->philos[i].meals > 0 && data->philos[i].full == 0
+		&& time_interval > data->time_die)
 	{
+		pthread_mutex_lock(&data->die_mutex);
+		printf("%ld %d is dead\n", ft_gettimeofday(), data->philos[i].id);
 		data->die = 1;
-		data->philos[i].die = 1;
-		//printf("DIE: %zu, %zu\n", time_interval, data->time_die);
+		pthread_mutex_unlock(&data->die_mutex);
 		return (1);
 	}
 	return (0);

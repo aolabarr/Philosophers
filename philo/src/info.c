@@ -14,5 +14,5 @@ void	final_info(t_data *data)
 
 void	philo_info(t_philo *philo)
 {
-	printf("\nmeals-full-die: philo %d (%d, %d, %d)\n", philo->id, philo->meals, philo->full, philo->die);
+	printf("\nmeals-full: philo %d (%d, %d)\n", philo->id, philo->meals, philo->full);
 }
