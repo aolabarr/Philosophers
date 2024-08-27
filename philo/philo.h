@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:34:43 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/26 18:50:40 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:33:07 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int		is_dead_calcule(t_data *data, int i);
 
 // ACTIONS
 void	sleep_action(t_data *data, t_philo *philo);
-void	eat(t_data *data, t_philo *philo);
-void	get_fork(t_philo *philo, int type);
+int		eat(t_data *data, t_philo *philo);
+int		get_fork(t_data *data, t_philo *philo, int type);
 
 #endif

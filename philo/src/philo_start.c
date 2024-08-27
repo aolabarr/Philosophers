@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:07:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/26 18:46:43 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/27 20:17:48 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,20 @@ void	*run_philo(void *input)
 int	do_action(t_data *data, t_philo *philo, int type)
 {
 	if (is_someone_dead(data))
-		return (0);
+		return (0);	
 	if (type == GET_F_FORK)
-		get_fork(philo, FIRST);
+		get_fork(data, philo, FIRST);
 	else if (type == GET_S_FORK)
-		get_fork(philo, SECOND);
+		get_fork(data, philo, SECOND);
 	if (type == EAT)
 		eat(data, philo);
 	else if (type == SLEEP)
 		sleep_action(data, philo);
 	else if (type == THINK)
-		printf("%ld %d is thinking\n", ft_gettimeofday(), philo->id);
+	{
+		if (!is_someone_dead(data))
+			printf("%ld %d is thinking\n", ft_gettimeofday(), philo->id);
+	}	
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:27:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/26 19:12:03 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:38:16 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,16 @@ int	is_dead_calcule(t_data *data, int i)
 	pthread_mutex_lock(&data->time_mutex);
 	time_interval = ft_gettimeofday() - data->philos[i].last_time;
 	pthread_mutex_unlock(&data->time_mutex);
-	if (data->philos[i].meals > 0 && data->philos[i].full == 0
-		&& time_interval > data->time_die)
+	pthread_mutex_lock(&data->full_mutex);
+	if (data->philos[i].full == 0 && time_interval > data->time_die)
 	{
-		printf("%ld %d is dead\n", ft_gettimeofday(), data->philos[i].id);
+		pthread_mutex_unlock(&data->full_mutex);
 		pthread_mutex_lock(&data->die_mutex);
-		printf("%ld %d is dead\n", ft_gettimeofday(), data->philos[i].id);
 		data->die = 1;
 		pthread_mutex_unlock(&data->die_mutex);
+		printf("%ld %d is dead\n", ft_gettimeofday(), data->philos[i].id);
 		return (1);
 	}
+	pthread_mutex_unlock(&data->full_mutex);
 	return (0);
 }
