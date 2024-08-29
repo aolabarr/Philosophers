@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:48:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/26 18:03:54 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:08:05 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*init_data(int ac, char **av, t_data *data)
 		return (NULL);
 	data->die = 0;
 	data->full = 0;
+	if (!init_time(data))
+		return (NULL);
 	return (NO_NULL);
 }
 
@@ -47,6 +49,18 @@ char	*init_philos(t_data *data)
 		data->philos[i].full = 0;
 		data->philos[i].last_time = ft_gettimeofday();
 		data->philos[i].data = (void *)data;
+		i++;
+	}
+	return (NO_NULL);
+}
+char	*init_time(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->nbr_philos)
+	{
+		data->philos[i].last_time = ft_gettimeofday();
 		i++;
 	}
 	return (NO_NULL);

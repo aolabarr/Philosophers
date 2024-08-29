@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:34:43 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/27 19:33:07 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:08:02 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ char	*init_data(int ac, char **av, t_data *data);
 char	*init_philos(t_data *data);
 void	assign_forks(t_data *data, int i);
 char	*init_mutex(t_data *data);
+char	*init_time(t_data *data);
 size_t	ft_gettimeofday(void);
 
 //START

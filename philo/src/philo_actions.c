@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:51:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/27 20:13:08 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/08/29 15:58:49 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@ int	eat(t_data *data, t_philo *philo)
 	pthread_mutex_lock(&data->time_mutex);
 	philo->last_time = ft_gettimeofday();
 	pthread_mutex_unlock(&data->time_mutex);
-	if (!is_someone_dead(data))
-		printf("%ld %d is eating\n", philo->last_time, philo->id);
+	if (is_someone_dead(data))
+	{
+		pthread_mutex_unlock(&philo->s_fork->mutex);
+		pthread_mutex_unlock(&philo->f_fork->mutex);
+		return (0);	
+	}
+	printf("%ld %d is eating\n", philo->last_time, philo->id);
 	usleep(data->time_eat * 1000);
 	philo->meals += 1;
 	if (philo->meals == data->nbr_meals)
@@ -36,7 +41,10 @@ void	sleep_action(t_data *data, t_philo *philo)
 {
 	if (!is_someone_dead(data))
 		printf("%ld %d is sleeping\n", ft_gettimeofday(), philo->id);
+	else
+		return ;
 	usleep(data->time_sleep * 1000);
+	return ;
 }
 
 int	get_fork(t_data *data, t_philo *philo, int type)
@@ -44,18 +52,18 @@ int	get_fork(t_data *data, t_philo *philo, int type)
 	if (type == FIRST)
 	{
 		pthread_mutex_lock(&philo->f_fork->mutex);
-		if (is_someone_dead(data))
-			return (pthread_mutex_unlock(&philo->f_fork->mutex), 0);
 		if (!is_someone_dead(data))
 			printf("%ld %d has taken a fork\n", ft_gettimeofday(), philo->id);
+		else
+			return (pthread_mutex_unlock(&philo->f_fork->mutex), 0);
 	}
 	else if (type == SECOND)
 	{
-		pthread_mutex_lock(&philo->s_fork->mutex);
-		if (is_someone_dead(data))
-			return (pthread_mutex_unlock(&philo->f_fork->mutex), 0);
+		pthread_mutex_lock(&philo->s_fork->mutex);	
 		if (!is_someone_dead(data))
 			printf("%ld %d has taken a fork\n", ft_gettimeofday(), philo->id);
+		else
+			return (pthread_mutex_unlock(&philo->f_fork->mutex), 0);
 	}
 	return (0);
 }
