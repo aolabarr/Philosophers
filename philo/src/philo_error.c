@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:11:30 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/26 18:49:04 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:03:43 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*check_input(int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (!str_is_digit(av[i]))
+		if (!(str_is_digit(av[i]) && ft_str_is_int(av[i])))
 			return (handle_error(NULL, INPUT), NULL);
 		i++;
 	}
@@ -51,6 +51,25 @@ int	str_is_digit(char *str)
 		if (*str < '0' || *str > '9')
 			return (0);
 		str++;
+	}
+	return (1);
+}
+
+int	ft_str_is_int(char *str)
+{
+	if (str[0] != '-' && ftph_strlen(str) > 10)
+		return (0);
+	else if (str[0] != '-' && ftph_strlen(str) == 10)
+	{
+		if (ft_strncmp(MAXINT_STR, str, ftph_strlen(str)) < 0)
+			return (0);
+	}
+	else if (str[0] == '-' && ftph_strlen(str) > 11)
+		return (0);
+	else if (str[0] == '-' && ftph_strlen(str) == 11)
+	{
+		if (ft_strncmp(MININT_STR, str, ftph_strlen(str)) < 0)
+			return (0);
 	}
 	return (1);
 }

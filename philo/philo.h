@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:34:43 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/29 16:08:02 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:02:21 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_data
 	int			full;
 	t_mtx		full_mutex;
 	t_mtx		time_mutex;
+	int			all_create;
 }			t_data;
 
 # define INPUT_ERROR_MESSAGE		"Incorrect arguments"
@@ -63,9 +64,12 @@ typedef struct s_data
 # define MUTEX_ERROR_MESSAGE		"Mutex creation error"
 # define THREAD_ERROR_MESSAGE		"Thread creation error"
 
+# define MAXINT_STR	"2147483647"
+# define MININT_STR	"-2147483648"
 # define NO_MEALS	-1
 # define NO_NULL	""
 # define SLEEP_EVEN	10
+# define FINAL_WAIT 1000
 
 # define FIRST		1
 # define SECOND		2
@@ -96,12 +100,14 @@ void	*run_one_philo(void *input);
 char	*check_input(int ac, char **av);
 void	handle_error(t_data *data, int type);
 int		str_is_digit(char *str);
+int		ft_str_is_int(char *str);
 
 // UTILS
 size_t	ftph_strlen(const char *str);
 void	ftph_putendl(char *s);
 int		ftph_atoi(const char *str);
 void	*ft_malloc(t_data *data, int bytes);
+int		ft_strncmp(char *s1, char *s2, size_t n);
 
 //INIT
 char	*init_data(int ac, char **av, t_data *data);

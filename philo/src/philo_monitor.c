@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:27:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/27 19:38:16 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:43:29 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ void	*run_monitor(void *input)
 	{
 		if (check_status(data) == DEAD)
 			break ;
+	}
+	
+	if (data->full == 1)
+	{
+		usleep(FINAL_WAIT * 1000);
+		printf("All philosophers are already full\n");
 	}
 	return (NO_NULL);
 }
