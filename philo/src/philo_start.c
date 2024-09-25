@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:07:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/29 16:19:56 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:40:45 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	do_action(t_data *data, t_philo *philo, int type)
 	else if (type == THINK)
 	{
 		if (!is_someone_dead(data))
-			printf("%ld %d is thinking\n", ft_gettimeofday(), philo->id);
+			printf("%ld %d is thinking\n", ft_gettimeofday() - data->time_zero, philo->id);
 	}	
 	return (0);
 }

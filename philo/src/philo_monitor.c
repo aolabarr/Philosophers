@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:27:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/09/25 16:43:29 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:43:53 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	is_dead_calcule(t_data *data, int i)
 		pthread_mutex_lock(&data->die_mutex);
 		data->die = 1;
 		pthread_mutex_unlock(&data->die_mutex);
-		printf("%ld %d is dead\n", ft_gettimeofday(), data->philos[i].id);
+		printf("%ld %d is dead\n", ft_gettimeofday() - data->time_zero, data->philos[i].id);
 		return (1);
 	}
 	pthread_mutex_unlock(&data->full_mutex);

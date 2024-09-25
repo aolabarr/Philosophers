@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:34:43 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/09/25 17:02:21 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:38:09 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_data
 	t_mtx		full_mutex;
 	t_mtx		time_mutex;
 	int			all_create;
+	size_t		time_zero;
 }			t_data;
 
 # define INPUT_ERROR_MESSAGE		"Incorrect arguments"

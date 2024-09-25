@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:48:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/09/25 16:49:31 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/09/25 18:39:09 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,11 @@ char	*init_time(t_data *data)
 	int	i;
 
 	i = 0;
+	data->time_zero = ft_gettimeofday();
 	while (i < data->nbr_philos)
 	{
 		data->philos[i].last_time = ft_gettimeofday();
+		
 		i++;
 	}
 	return (NO_NULL);
