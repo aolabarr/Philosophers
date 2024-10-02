@@ -6,7 +6,7 @@
 #    By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/28 14:37:22 by aolabarr          #+#    #+#              #
-#    Updated: 2024/08/26 15:38:06 by aolabarr         ###   ########.fr        #
+#    Updated: 2024/10/02 19:53:01 by aolabarr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,6 @@ SRC =	philo_main.c \
 		philo_start.c \
 		philo_monitor.c \
 		philo_actions.c \
-		info.c
 
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
@@ -45,7 +44,6 @@ $(OBJ_DIR):
 
 sanitizer: lib $(OBJ_DIR) $(OBJS)
 	$(CC) $(CFLAGS) $(SFLAGS) $(OBJS) -o $(NAME)
-
 
 fclean: clean
 	rm -f $(NAME) *.out
