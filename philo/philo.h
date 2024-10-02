@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:34:43 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/09/25 18:38:09 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:56:52 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_philo
 	t_fork		*s_fork;
 	int			meals;
 	int			full;
-	t_mtx		die_mutex;
 	size_t		last_time;
 	void		*data;
 }				t_philo;
@@ -54,6 +53,7 @@ typedef struct s_data
 	int			die;
 	t_mtx		die_mutex;
 	int			full;
+	t_mtx		all_full_mutex;
 	t_mtx		full_mutex;
 	t_mtx		time_mutex;
 	int			all_create;
@@ -116,13 +116,13 @@ char	*init_philos(t_data *data);
 void	assign_forks(t_data *data, int i);
 char	*init_mutex(t_data *data);
 char	*init_time(t_data *data);
-size_t	ft_gettimeofday(void);
 
 //START
 char	*dinner_start(t_data *data);
 void	*run_philo(void *input);
 int		do_action(t_data *data, t_philo *philo, int type);
 int		is_someone_dead(t_data *data);
+int		is_all_philo_full(t_data *data);
 
 //MONITOR
 void	*run_monitor(void *input);
@@ -133,5 +133,6 @@ int		is_dead_calcule(t_data *data, int i);
 void	sleep_action(t_data *data, t_philo *philo);
 int		eat(t_data *data, t_philo *philo);
 int		get_fork(t_data *data, t_philo *philo, int type);
+size_t	ft_gettimeofday(void);
 
 #endif

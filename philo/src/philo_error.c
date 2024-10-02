@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:11:30 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/09/25 17:03:43 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/10/02 17:53:19 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*check_input(int ac, char **av)
 	while (i < ac)
 	{
 		if (!(str_is_digit(av[i]) && ft_str_is_int(av[i])))
+			return (handle_error(NULL, INPUT), NULL);
+		if (ftph_atoi(av[i]) == 0)
 			return (handle_error(NULL, INPUT), NULL);
 		i++;
 	}

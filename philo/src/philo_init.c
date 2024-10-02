@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:48:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/09/25 18:39:09 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:48:52 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	*init_philos(t_data *data)
 	}
 	return (NO_NULL);
 }
+
 char	*init_time(t_data *data)
 {
 	int	i;
@@ -62,7 +63,6 @@ char	*init_time(t_data *data)
 	while (i < data->nbr_philos)
 	{
 		data->philos[i].last_time = ft_gettimeofday();
-		
 		i++;
 	}
 	return (NO_NULL);
@@ -93,6 +93,8 @@ char	*init_mutex(t_data *data)
 			return (handle_error(data, MUTEX), NULL);
 		i++;
 	}
+	if (pthread_mutex_init(&data->all_full_mutex, NULL) != 0)
+		return (handle_error(data, MUTEX), NULL);
 	if (pthread_mutex_init(&data->full_mutex, NULL) != 0)
 		return (handle_error(data, MUTEX), NULL);
 	if (pthread_mutex_init(&data->die_mutex, NULL) != 0)
@@ -100,14 +102,4 @@ char	*init_mutex(t_data *data)
 	if (pthread_mutex_init(&data->time_mutex, NULL) != 0)
 		return (handle_error(data, MUTEX), NULL);
 	return (NO_NULL);
-}
-
-size_t	ft_gettimeofday(void)
-{
-	struct timeval	tv;
-	size_t			mstime;
-
-	gettimeofday(&tv, NULL);
-	mstime = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	return (mstime);
 }

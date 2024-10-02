@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:27:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/09/25 18:43:53 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:54:34 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	*run_monitor(void *input)
 		if (check_status(data) == DEAD)
 			break ;
 	}
-	
 	if (data->full == 1)
 	{
 		usleep(FINAL_WAIT * 1000);
@@ -44,7 +43,11 @@ int	check_status(t_data *data)
 		all_full += data->philos[i].full;
 		pthread_mutex_unlock(&data->full_mutex);
 		if (all_full == data->nbr_philos)
+		{
+			pthread_mutex_lock(&data->all_full_mutex);
 			data->full = 1;
+			pthread_mutex_unlock(&data->all_full_mutex);
+		}
 		if (is_dead_calcule(data, i))
 			return (DEAD);
 		i++;
@@ -66,7 +69,8 @@ int	is_dead_calcule(t_data *data, int i)
 		pthread_mutex_lock(&data->die_mutex);
 		data->die = 1;
 		pthread_mutex_unlock(&data->die_mutex);
-		printf("%ld %d is dead\n", ft_gettimeofday() - data->time_zero, data->philos[i].id);
+		printf("%ld\tPhilo %d is dead\n",
+			ft_gettimeofday() - data->time_zero, data->philos[i].id);
 		return (1);
 	}
 	pthread_mutex_unlock(&data->full_mutex);

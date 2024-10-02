@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:32:48 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/08/27 19:48:30 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:53:44 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ void	free_all(t_data *data)
 	data->philos = NULL;
 	data->forks = NULL;
 	pthread_mutex_destroy(&data->die_mutex);
+	pthread_mutex_destroy(&data->all_full_mutex);
 	pthread_mutex_destroy(&data->full_mutex);
 	pthread_mutex_destroy(&data->time_mutex);
 	return ;
 }
+
 char	*one_philosopher(t_data *data)
 {
 	t_philo	philo;
@@ -76,4 +78,3 @@ void	*run_one_philo(void *input)
 	printf("%ld 1 is dead\n", ft_gettimeofday());
 	return (NO_NULL);
 }
-

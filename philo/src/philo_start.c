@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 10:07:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/09/25 18:40:45 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:56:21 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ void	*run_philo(void *input)
 		do_action(data, philo, GET_F_FORK);
 		do_action(data, philo, GET_S_FORK);
 		do_action(data, philo, EAT);
+		if (is_all_philo_full(data))
+			break ;
 		do_action(data, philo, SLEEP);
+		if (is_all_philo_full(data))
+			break ;
 		do_action(data, philo, THINK);
 		pthread_mutex_lock(&data->die_mutex);
 	}
@@ -65,7 +69,7 @@ void	*run_philo(void *input)
 int	do_action(t_data *data, t_philo *philo, int type)
 {
 	if (is_someone_dead(data))
-		return (0);	
+		return (0);
 	if (type == GET_F_FORK)
 		get_fork(data, philo, FIRST);
 	else if (type == GET_S_FORK)
@@ -77,8 +81,11 @@ int	do_action(t_data *data, t_philo *philo, int type)
 	else if (type == THINK)
 	{
 		if (!is_someone_dead(data))
-			printf("%ld %d is thinking\n", ft_gettimeofday() - data->time_zero, philo->id);
-	}	
+		{
+			printf("%ld\tPhilo %d is thinking\n",
+				ft_gettimeofday() - data->time_zero, philo->id);
+		}
+	}
 	return (0);
 }
 
@@ -94,3 +101,14 @@ int	is_someone_dead(t_data *data)
 	return (0);
 }
 
+int	is_all_philo_full(t_data *data)
+{
+	pthread_mutex_lock(&data->all_full_mutex);
+	if (data->full == 1)
+	{
+		pthread_mutex_unlock(&data->all_full_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&data->all_full_mutex);
+	return (0);
+}
