@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 14:34:43 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/10/02 18:56:52 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/10/03 17:45:57 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,6 @@ typedef struct s_data
 # define MUTEX		3
 # define THREAD		4
 # define JOIN		5
-
-void	final_info(t_data *data);
-void	philo_info(t_philo *philo);
 
 //MAIN
 void	free_all(t_data *data);

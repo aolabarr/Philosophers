@@ -6,7 +6,7 @@
 /*   By: aolabarr <aolabarr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 13:51:20 by aolabarr          #+#    #+#             */
-/*   Updated: 2024/10/02 18:52:52 by aolabarr         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:56:23 by aolabarr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	get_fork(t_data *data, t_philo *philo, int type)
 				ft_gettimeofday() - data->time_zero, philo->id);
 		}
 		else
-			return (pthread_mutex_unlock(&philo->f_fork->mutex), 0);
+			return (pthread_mutex_unlock(&philo->s_fork->mutex), 0);
 	}
 	return (0);
 }
