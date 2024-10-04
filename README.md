@@ -35,3 +35,21 @@ Además de los mutex, es importante definir un orden claro para que los filósof
 
 Para mas detalle se recomienda consultar el subject del proyecto que se adjunta.
 
+## Reglas de Compilación y ejecución del programa
+El programa tiene 4 reglas:
+- `make`:          Genera la versión simple del programa.
+- `make re`: Realiza la limpieza de los objetos y del ejecutable.
+- `make fclean`: Realiza la limpieza de los objetos y del ejecutable.
+
+La ejecución del programa se realiza de la siguiente manera. Se introducen como argumentos del programa (los tiempos en milisegundos):
+- Nº de filósofos
+- Tiempo máximo para que el filósofo vuelva a comer despues de que haya empezado a comer la vez anterior. Si no come lo suficientemente rápido muere.
+- Tiempo que tarda en comer cada filósofo.
+- Tiempo que tarda en dormir cada filósofo despues de comer.
+- Nº de comidas. Este es un argumento opcional. Si no se introduce nada, el programa corre infinitamente y si no el programa para cuando todos hayan comido la cantidad dada.
+
+Por ejemplo:
+```
+./philo 4 500 200 200 4
+```
+En función de los valores introducidos del caso concreto, puede suceder que un filosofo muera o no. Como resultado del programa se escriben las acciones que suceden en la mesa, precedida por el tiempo en milisegundos de cuando sucede cada acción.
