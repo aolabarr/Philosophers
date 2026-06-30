@@ -1,3 +1,5 @@
+*Este proyecto ha sido desarrollado como parte del curriculum de 42 por [aolabarr](https://github.com/aolabarr/aolabarr).*
+
 # Philosophers
 
 ## Descripción. El problema de los filósofos comensales
